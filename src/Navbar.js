@@ -18,11 +18,7 @@ const Navbar = () => {
             <div className="links">
                 <Link to="/">Home</Link>
                 <Link to="/about">About</Link>
-                <Link to="/create" style={{
-                    color: 'white',
-                    backgroundColor: '#f1356d',
-                    borderRadius: '8px'
-                }}>Add New Movie</Link>
+                <Link to="/create" className='create-movie'>Add New Movie</Link>
             </div>
         </nav >
     );

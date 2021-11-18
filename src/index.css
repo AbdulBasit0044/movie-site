@@ -6,6 +6,10 @@
   font-family: "Quicksand";
   /* color: #333; */
 }
+
+.App {
+  /* background-color: rgb(131, 110, 172); */
+}
 .navbar {
   padding: 20px;
   display: flex;
@@ -24,9 +28,15 @@
   margin-left: 16px;
   text-decoration: none;
   padding: 6px;
+  /* color: white; */
 }
 .navbar a:hover {
   color: #f1356d;
+}
+.create-movie {
+  /* color: white; */
+  /* background-color: #824cc0; */
+  border-radius: "8px";
 }
 .content {
   max-width: 600px;
@@ -34,34 +44,34 @@
   padding: 20px;
 }
 
-/* blog previews / list */
-.blog-preview {
+/* movie previews / list */
+.movie-preview {
   padding: 10px 16px;
   margin: 20px 0;
   border-bottom: 1px solid #fafafa;
 }
-.blog-preview:hover {
+.movie-preview:hover {
   box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.1);
 }
-.blog-preview h2 {
+.movie-preview h2 {
   font-size: 20px;
   color: #f1356d;
   margin-bottom: 8px;
 }
-.blog-preview a {
+.movie-preview a {
   text-decoration: none;
 }
 
-/* blog details page */
-.blog-details h2 {
+/* movie details page */
+.movie-details h2 {
   font-size: 20px;
   color: #f1356d;
   margin-bottom: 10px;
 }
-.blog-details div {
+.movie-details div {
   margin: 20px 0;
 }
-.blog-details button {
+.movie-details button {
   background: #f1356d;
   color: #fff;
   border: 0;
@@ -70,7 +80,7 @@
   cursor: pointer;
 }
 
-/* create new blog form */
+/* create new movie form */
 .create {
   max-width: 400px;
   margin: 0 auto;
@@ -102,4 +112,51 @@
   padding: 8px;
   border-radius: 8px;
   cursor: pointer;
+}
+.movie-container {
+  /* background-color: rgb(131, 110, 172); */
+  display: flex;
+  flex-wrap: wrap;
+}
+.movie {
+  /* background-color: rgb(104, 77, 158); */
+  /* display: flex;
+  flex-wrap: wrap; */
+  border-radius: 3px;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  width: 260px;
+  margin: 1rem;
+}
+.movie img {
+  max-width: 250px;
+}
+.movie-info {
+  color: #c5c1c3;
+  display: flex;
+  padding: 1rem;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.movie-info h3 {
+  margin: 0;
+  color: #cac6c7;
+}
+.movie-over {
+  background-color: white;
+  color: #f1356d;
+  position: absolute;
+  padding: 1rem;
+  overflow: auto;
+  max-height: 100%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  transform: translateY(100%);
+  transition: transform 0.3s ease-in-out;
+}
+
+.movie-hover .movie-over {
+  transform: translate(0%);
 }
