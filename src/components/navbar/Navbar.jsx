@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import TheatersIcon from '@mui/icons-material/Theaters';
 import Button from '@mui/material/Button';
+import { Wrapper } from './Styles/StyleNav';
 
 const Navbar = () => {
     return (
-        <nav className="navbar">
+        <Wrapper>
             <Link to="/">
                 <Button
                     variant="outlined"
@@ -24,7 +25,7 @@ const Navbar = () => {
                     borderRadius: '8px'
                 }}>Add New Movie</Link>
             </div>
-        </nav >
+        </Wrapper>
     );
 }
 
