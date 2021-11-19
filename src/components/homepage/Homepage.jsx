@@ -1,9 +1,14 @@
+import Movie from "../movie/Movie";
+import { MovieContainer } from "./Styles/StyleMovieContainer";
+import { GetMovies } from "../../API/movies";
+
 const Homepage = () => {
-    return (
-        <div className="homepage">
-            <p>This is home page</p>
-        </div>
-    );
-}
+  const { movies, isPending, error } = GetMovies();
+  return (
+  <MovieContainer>
+    {movies && <Movie movies={movies} />}
+    </MovieContainer>
+    )
+};
 
 export default Homepage;

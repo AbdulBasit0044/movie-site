@@ -1,9 +1,10 @@
-import './App.css';
-import Navbar from './components/navbar/Navbar';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Homepage from './components/homepage/Homepage';
-import Create from './components/homepage/Create';
-import About from './components/about/About';
+import "./App.css";
+import Navbar from "./components/navbar/Navbar";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Homepage from "./components/homepage/Homepage";
+import Create from "./components/navbar/Create";
+import About from "./components/about/About";
+import MovieDetails from "./components/movie/MovieDetails";
 
 function App() {
   return (
@@ -14,9 +15,10 @@ function App() {
           <Route path="" element={<Homepage />} />
           <Route path="about" element={<About />} />
           <Route path="create" element={<Create />} />
+          <Route path="movies/:id" element={<MovieDetails />} />
         </Routes>
       </div>
-    </Router >
+    </Router>
   );
 }
 
