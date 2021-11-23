@@ -1,29 +1,46 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { CreateMovie } from "../../API/movies";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { GetMoviesBasedOnId, UpdateMovie } from "../../API/movies";
 import { CreateStyleWrapper } from "./Styles/CreateStyleWrapper";
 
-const Create = () => {
+const Edit = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [movie, setMovie] = useState(null);
   const [title, setTitle] = useState("");
   const [director, setDirector] = useState("");
   const [overview, setOverview] = useState("");
   const [rating, setRating] = useState("");
-  const [img, setImg] = useState(
-    "https://i.ytimg.com/vi/VzvdoLeXClg/movieposter_en.jpg"
-  );
-  const navigate = useNavigate();
- 
-  const handleAddMovieSubmit = async (e) => {
+  const [img, setImg] = useState("");
+  
+  useEffect(() => {
+    async function FetchData() {
+      const movie = await GetMoviesBasedOnId(id).then((resp) => {
+        return resp;
+      });
+      setMovie(movie);
+      if (movie != null) {
+        setTitle(movie.title);
+        setDirector(movie.director);
+        setOverview(movie.overview);
+        setRating(movie.rating);
+        setImg(movie.img);
+      }
+    }
+    FetchData();
+  }, []);
+
+  const handleEditMovieSubmit = async (e) => {
     e.preventDefault();
-    const movie = { title, director, overview, rating, img };
-    await CreateMovie(movie).then((resp) => {
-      resp?.ok && navigate("/");
+    const movie = { title, director, overview, rating, img, id };
+    await UpdateMovie(movie).then((resp) => {
+      resp?.ok && navigate(`/movies/${id}`);
     });
   };
   return (
     <CreateStyleWrapper>
-      <h2>Add new movie</h2>
-      <form onSubmit={handleAddMovieSubmit}>
+      <h2>Edit this movie details</h2>
+      <form onSubmit={handleEditMovieSubmit}>
         <label>Movie Title</label>
         <input
           type="text"
@@ -56,10 +73,10 @@ const Create = () => {
           value={img}
           onChange={(e) => setImg(e.target.value)}
         />
-        <button>Add Movie</button>
+        <button>Update Movie</button>
       </form>
     </CreateStyleWrapper>
   );
 };
 
-export default Create;
+export default Edit;
