@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const Movie = ({ movies }) => {
   return (
     <>
-      {movies.map((movie) => (
+      {movies?.map((movie) => (
         <Link key={movie.id} to={`/movies/${movie.id}`}>
           <div className="movie">
             <div className="movie-img">
