@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import TheatersIcon from "@mui/icons-material/Theaters";
+import LiveTvIcon from '@mui/icons-material/LiveTv';
 import Button from "@mui/material/Button";
 import { Wrapper } from "./Styles/StyleNav";
 
@@ -28,6 +29,32 @@ const Navbar = () => {
       <div className="links">
         <Link to="/">Home</Link>
         <Link to="/about">About</Link>
+        <Link
+          to="/watchlist"
+          style={{
+            color: "white",
+            borderRadius: "8px",
+          }}
+        >
+          <Button
+          variant="outlined"
+          size="medium"
+          color="secondary"
+          endIcon={
+            <LiveTvIcon
+              style={{
+                maxWidth: "40px",
+                maxHeight: "40px",
+                minWidth: "40px",
+                minHeight: "40px",
+              }}
+            />
+          }
+        >
+          Watchlist
+        </Button>
+          
+        </Link>
         <Link
           to="/create"
           style={{
