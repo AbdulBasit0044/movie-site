@@ -9,7 +9,7 @@ const Create = () => {
   const [overview, setOverview] = useState("");
   const [rating, setRating] = useState("");
   const [img, setImg] = useState(
-    "https://i.ytimg.com/vi/VzvdoLeXClg/movieposter_en.jpg"
+    "https://img.yts.mx/assets/images/movies/1917_2019/medium-cover.jpg"
   );
   const navigate = useNavigate();
  
@@ -46,9 +46,12 @@ const Create = () => {
         />
         <label>Rating</label>
         <input
-          type="text"
+          type="number"
           value={rating}
-          onChange={(e) => setRating(e.target.value)}
+          min = {0}
+          max = {10}
+          step = {0.1}
+          onChange={(e) => setRating(e.target.value !== ''?parseFloat(e.target.value):"")}
         />
         <label>Cover Image Link</label>
         <input

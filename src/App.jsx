@@ -7,6 +7,7 @@ import Edit from "./components/navbar/Edit";
 import About from "./components/about/About";
 import MovieDetails from "./components/movie/MovieDetails";
 import NotFound from "./components/NotFound/NotFound";
+import Watchlist from "./components/watchlist/Watchlist";
 
 function App() {
   return (
@@ -19,6 +20,8 @@ function App() {
           <Route path="create" element={<Create />} />
           <Route path="movies/:id" element={<MovieDetails />} />
           <Route path="edit/:id" element={<Edit />} />
+          <Route path="watchlist/" element={<Watchlist />} />
+          <Route path="watchlist/:id" element={<Watchlist />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
