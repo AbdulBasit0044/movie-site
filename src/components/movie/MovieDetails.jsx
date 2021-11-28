@@ -46,6 +46,10 @@ const MovieDetails = () => {
   return (
     <>
       {movie && (
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> f16a6e518f02d6f5b56c559c0ab6af3df7540bd5
         <Box sx={{ flexGrow: 1, marginTop: 10 }}>
           <Grid
             container
@@ -116,6 +120,53 @@ const MovieDetails = () => {
             </Grid>
           </Grid>
         </Box>
+<<<<<<< HEAD
+=======
+=======
+        <Grid
+          container
+          spacing={0}
+          direction="column"
+          alignItems="center"
+          justify="center"
+          style={{ minHeight: "100vh" }}
+        >
+          <Grid item xs={2}>
+            <Card sx={{ maxWidth: 300 }}>
+              <CardActionArea>
+                <CardMedia
+                  component="img"
+                  image={movie?.img}
+                  alt="green iguana"
+                  object-fit
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h4" component="div">
+                    {movie?.title}
+                  </Typography>
+                  <p>
+                    Directed by {movie?.director} {movie?.rating}
+                  </p>
+                  <Typography variant="body2" color="text.secondary">
+                    {movie?.overview}
+                  </Typography>
+                </CardContent>
+                <CardActions
+                  style={{ display: "flex", justifyContent: "center" }}
+                >
+                  <Link to={`/edit/${id}`}>
+                    <Button size="small">Edit</Button>
+                  </Link>
+                  <Button size="small" onClick={handleDelete}>
+                    Delete
+                  </Button>
+                </CardActions>
+              </CardActionArea>
+            </Card>
+          </Grid>
+        </Grid>
+>>>>>>> 832647c2eb7a455103a249858366ca6e54ea101f
+>>>>>>> f16a6e518f02d6f5b56c559c0ab6af3df7540bd5
       )}
     </>
   );
