@@ -155,6 +155,7 @@
       "id": 22
     },
     {
+<<<<<<< HEAD
       "title": "Fight Club",
       "director": "David Fincherr",
       "overview": "A nameless first person narrator (Edward Norton) attends support groups in attempt to subdue his emotional state and relieve his insomniac state. When he meets Marla (Helena Bonham Carter), another fake attendee of support groups, his life seems to become a little more bearable. However when he associates himself with Tyler (Brad Pitt) he is dragged into an underground fight club and soap making scheme. Together the two men spiral out of control and engage in competitive rivalry for love and power. —Rhiannon",
@@ -169,6 +170,14 @@
       "rating": 9,
       "img": "https://img.yts.mx/assets/images/movies/The_Dark_Knight_2008/medium-cover.jpg",
       "id": 17
+=======
+      "title": "fasd",
+      "director": "afsdf",
+      "overview": "fasf",
+      "rating": "asfa",
+      "img": "https://i.ytimg.com/vi/VzvdoLeXClg/movieposter_en.jpg",
+      "id": 72
+>>>>>>> 832647c2eb7a455103a249858366ca6e54ea101f
     }
   ]
 }
