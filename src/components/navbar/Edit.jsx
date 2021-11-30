@@ -63,9 +63,12 @@ const Edit = () => {
         />
         <label>Rating</label>
         <input
-          type="text"
+          type="number"
           value={rating}
-          onChange={(e) => setRating(e.target.value)}
+          min = {0}
+          max = {10}
+          step = {0.1}
+          onChange={(e) => setRating(e.target.value !==""?parseFloat(e.target.value):"")}
         />
         <label>Cover Image Link</label>
         <input
