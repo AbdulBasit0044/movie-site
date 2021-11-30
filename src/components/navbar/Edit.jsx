@@ -1,41 +1,53 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { GetMoviesBasedOnId, UpdateMovie } from "../../API/movies";
+import { GetMoviesBasedOnId } from "../../API/movies";
 import { CreateStyleWrapper } from "./Styles/CreateStyleWrapper";
+import { withMovies, ACTIONS } from "../../contexts/MovieContext";
 
-const Edit = () => {
+const Edit = (props) => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [movie, setMovie] = useState(null);
-  const [title, setTitle] = useState("");
-  const [director, setDirector] = useState("");
-  const [overview, setOverview] = useState("");
-  const [rating, setRating] = useState("");
-  const [img, setImg] = useState("");
-  
+
+  const title = props.values.title;
+  const director = props.values.director;
+  const overview = props.values.overview;
+  const rating = props.values.rating;
+  const img = props.values.img;
+  const dispatch = props.values.dispatch;
+  const movie = props.values.movie;
+
   useEffect(() => {
     async function FetchData() {
       const movie = await GetMoviesBasedOnId(id).then((resp) => {
         return resp;
       });
-      setMovie(movie);
+      dispatch({ type: ACTIONS.SET_MOVIE_FIRST_TIME, payload: { movie: movie } });
       if (movie != null) {
-        setTitle(movie.title);
-        setDirector(movie.director);
-        setOverview(movie.overview);
-        setRating(movie.rating);
-        setImg(movie.img);
+        dispatch({ type: ACTIONS.SET_TITLE, payload: { value: movie.title } });
+        dispatch({
+          type: ACTIONS.SET_DIRECTOR,
+          payload: { value: movie.director },
+        });
+        dispatch({
+          type: ACTIONS.SET_OVERVIEW,
+          payload: { value: movie.overview },
+        });
+        dispatch({
+          type: ACTIONS.SET_RATING,
+          payload: { value: movie.rating },
+        });
+        dispatch({ type: ACTIONS.SET_IMG, payload: { value: movie.img } });
       }
     }
     FetchData();
   }, []);
 
-  const handleEditMovieSubmit = async (e) => {
+  const handleEditMovieSubmit = (e) => {
     e.preventDefault();
     const movie = { title, director, overview, rating, img, id };
-    await UpdateMovie(movie).then((resp) => {
-      resp?.ok && navigate(`/movies/${id}`);
-    });
+    dispatch({ type: ACTIONS.SUBMIT_EDIT_MOVIE, payload: { movie: movie } });
+    navigate(`/movies/${id}`);
+    
   };
   return (
     <CreateStyleWrapper>
@@ -46,35 +58,64 @@ const Edit = () => {
           type="text"
           required
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={(e) =>
+            dispatch({
+              type: ACTIONS.SET_TITLE,
+              payload: { value: e.target.value },
+            })
+          }
         />
         <label>Director Name</label>
         <input
           type="text"
           value={director}
-          onChange={(e) => setDirector(e.target.value)}
+          onChange={(e) =>
+            dispatch({
+              type: ACTIONS.SET_DIRECTOR,
+              payload: { value: e.target.value },
+            })
+          }
         />
         <label>Overview</label>
         <input
           type="text"
           value={overview}
           required
-          onChange={(e) => setOverview(e.target.value)}
+          onChange={(e) =>
+            dispatch({
+              type: ACTIONS.SET_OVERVIEW,
+              payload: { value: e.target.value },
+            })
+          }
         />
         <label>Rating</label>
         <input
           type="number"
           value={rating}
-          min = {0}
-          max = {10}
-          step = {0.1}
-          onChange={(e) => setRating(e.target.value !==""?parseFloat(e.target.value):"")}
+          min={0}
+          max={10}
+          step={0.1}
+          onChange={(e) =>
+            dispatch({
+              type: ACTIONS.SET_RATING,
+              payload: {
+                value: e.target.value !== "" ? parseFloat(e.target.value) : "",
+              },
+            })
+          }
         />
         <label>Cover Image Link</label>
         <input
           type="text"
           value={img}
-          onChange={(e) => setImg(e.target.value)}
+          onChange={(e) =>
+            dispatch({
+              type: ACTIONS.SET_IMG,
+              payload: {
+                value: e.target.value,
+              },
+            })
+          }
         />
         <button>Update Movie</button>
       </form>
@@ -82,4 +123,4 @@ const Edit = () => {
   );
 };
 
-export default Edit;
+export default withMovies(Edit);

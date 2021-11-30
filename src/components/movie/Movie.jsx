@@ -1,15 +1,18 @@
 import { Link } from "react-router-dom";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
-import { CardActionArea } from "@mui/material";
-import Grid from "@mui/material/Grid";
+import {
+  Card,
+  CardContent,
+  CardMedia,
+  Typography,
+  CardActionArea,
+  Grid,
+} from "@mui/material";
 import StarRatingComponent from "react-star-rating-component";
 import { useMovies } from "../../contexts/MovieContext";
 
 const Movie = () => {
-  const { movies } = useMovies();
+  const  values = useMovies();
+  const  movies  = values.movies;
 
   return (
     <>
@@ -35,20 +38,19 @@ const Movie = () => {
                         component="img"
                         image={movie?.img}
                         alt="green iguana"
-                        object-fit
                       />
                       <CardContent>
-                        <Typography gutterBottom variant="h4" component="div">
+                        <Typography gutterBottom variant="h4" component="span">
                           {movie?.title}
                         </Typography>
                         <p>Director: {movie?.director}</p>
-                        <p>
+                        <span>
                           <StarRatingComponent
                             name="rating"
                             starCount={10}
                             value={movie.rating}
                           />
-                        </p>
+                        </span>
                       </CardContent>
                     </CardActionArea>
                   </Card>

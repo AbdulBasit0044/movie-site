@@ -34,7 +34,7 @@ export const CreateMovie = async (obj) => {
             body: JSON.stringify(obj),
         })
     } catch (error) {
-        return new Error(error);;
+        return new Error(error);
     }
 }
 
@@ -44,7 +44,7 @@ export const DeleteMovie = async (id) => {
             method: "DELETE",
         })
     } catch (error) {
-        return new Error(error);;
+        return new Error(error);
     }
 }
 
@@ -56,7 +56,7 @@ export const UpdateMovie = async (obj) => {
             body: JSON.stringify(obj),
         })
     } catch (error) {
-        return new Error(error);;
+        return new Error(error);
     }
 }
 

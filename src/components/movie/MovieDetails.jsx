@@ -1,39 +1,45 @@
-import { useNavigate, useParams } from "react-router-dom";
-import { GetMoviesBasedOnId, DeleteMovie } from "../../API/movies";
-import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import { CardActionArea } from "@mui/material";
-import Grid from "@mui/material/Grid";
-import { styled } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
+import { useNavigate, useParams, Link } from "react-router-dom";
+import { GetMoviesBasedOnId } from "../../API/movies";
+import { useEffect } from "react";
+import {
+  Card,
+  CardContent,
+  CardMedia,
+  Typography,
+  CardActionArea,
+  Grid,
+  CardActions,
+  Button,
+  styled,
+  Box,
+  Paper,
+} from "@mui/material";
 import StarRatingComponent from "react-star-rating-component";
 import { WatchListButtinWrapper } from "./Styles/WatchlistButtonWrapper";
+import { withMovies, ACTIONS } from "../../contexts/MovieContext";
 
-const MovieDetails = () => {
+const MovieDetails = (props) => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [movie, setMovie] = useState(null);
+  const movie = props.values.movie;
+  const dispatch = props.values.dispatch;
 
   useEffect(() => {
     async function FetchData() {
       const movie = await GetMoviesBasedOnId(id).then((resp) => {
         return resp;
       });
-      setMovie(movie);
+      dispatch({
+        type: ACTIONS.SET_MOVIE_FIRST_TIME,
+        payload: { movie: movie },
+      });
     }
     FetchData();
   }, []);
-  const handleDelete = async () => {
-    await DeleteMovie(movie.id).then((resp) => {
-      resp?.ok && navigate("/");
-    });
+
+  const handleDelete = () => {
+    dispatch({ type: ACTIONS.DELETE_MOVIE, payload: { id: movie.id } });
+    navigate("/");
   };
 
   const Item = styled(Paper)(({ theme }) => ({
@@ -63,7 +69,6 @@ const MovieDetails = () => {
                     component="img"
                     image={movie?.img}
                     alt="green iguana"
-                    object-fit
                   />
                 </CardActionArea>
               </Card>
@@ -84,7 +89,7 @@ const MovieDetails = () => {
               <Item>
                 <CardActionArea>
                   <CardContent>
-                    <Typography gutterBottom variant="h4" component="div">
+                    <Typography gutterBottom variant="h4" component="span">
                       {movie?.title}
                     </Typography>
                     <p>Directed by {movie?.director}</p>
@@ -121,4 +126,4 @@ const MovieDetails = () => {
   );
 };
 
-export default MovieDetails;
+export default withMovies(MovieDetails);

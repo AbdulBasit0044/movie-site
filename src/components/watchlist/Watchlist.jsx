@@ -1,29 +1,47 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useReducer, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import {
   GetMoviesBasedOnId,
   GetWatchlist,
   AddToWatchlist,
 } from "../../API/movies";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import Divider from "@mui/material/Divider";
-import ListItemText from "@mui/material/ListItemText";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import Avatar from "@mui/material/Avatar";
-import Typography from "@mui/material/Typography";
+import {
+  Typography,
+  List,
+  ListItem,
+  Divider,
+  ListItemText,
+  ListItemAvatar,
+  Avatar
+} from "@mui/material";
+
+const ACTIONS = {
+  SET_WATCHLIST: "set-watchlist",
+  ADD_TO_WATCHLIST: "add_to_watchlist"
+};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case ACTIONS.ADD_TO_WATCHLIST:
+      return state = [...state, action.payload.value];
+    case ACTIONS.SET_WATCHLIST:
+      return (state = action.payload.value);
+    default:
+      return;
+  }
+}
 
 const Watchlist = () => {
   const { id } = useParams();
-  const [watchlist, setWatchlist] = useState(null);
+  const [watchlist, setWatchlist] = useReducer(reducer, null);
 
   useEffect(() => {
     async function FetchData() {
       const watchlist = await GetWatchlist().then((resp) => {
         return resp;
       });
-      setWatchlist(watchlist);
+      setWatchlist({type: ACTIONS.SET_WATCHLIST, payload:{ value: watchlist}});
     }
     FetchData();
   }, []);
@@ -34,7 +52,7 @@ const Watchlist = () => {
         return resp;
       });
       AddToWatchlist(movie);
-      setWatchlist((watchlist) => [...watchlist, movie]);
+      setWatchlist({type: ACTIONS.ADD_TO_WATCHLIST, payload:{ value: movie}});
     }
     if (id) FetchData();
   }, []);
@@ -49,7 +67,7 @@ const Watchlist = () => {
       {watchlist?.map((movie) => (
         <List
           key={movie.id}
-          sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+          sx={{ width: "100%", maxWidth: 360, paddingLeft:10, bgcolor: "background.paper" }}
         >
           <ListItem alignItems="flex-start">
             <ListItemAvatar>
@@ -58,7 +76,7 @@ const Watchlist = () => {
                   backgroundColor: randomColor(),
                 }}
                 alt={`${movie.title}`.charAt(0)}
-                src="/static/images/avatar/1.jpg"
+                src={movie.img}
               />
             </ListItemAvatar>
             <ListItemText

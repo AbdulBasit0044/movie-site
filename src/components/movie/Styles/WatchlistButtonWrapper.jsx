@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 export const WatchListButtinWrapper = styled.span`
   padding: 20px;
