@@ -1,7 +1,8 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 export const MovieContainer = styled.div`
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
   div{
     color:#000000;

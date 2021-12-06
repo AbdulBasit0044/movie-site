@@ -30,11 +30,13 @@ export const CreateMovie = async (obj) => {
     try {
         return await fetch(`${url}/movies/`, {
             method: "POST",
+            // cache: 'force-cache', // *default, no-cache, reload, force-cache, only-if-cached
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(obj),
+        }).then((data)=>{
         })
     } catch (error) {
-        return new Error(error);;
+        return new Error(error);
     }
 }
 
@@ -44,7 +46,7 @@ export const DeleteMovie = async (id) => {
             method: "DELETE",
         })
     } catch (error) {
-        return new Error(error);;
+        return new Error(error);
     }
 }
 
@@ -56,7 +58,7 @@ export const UpdateMovie = async (obj) => {
             body: JSON.stringify(obj),
         })
     } catch (error) {
-        return new Error(error);;
+        return new Error(error);
     }
 }
 
