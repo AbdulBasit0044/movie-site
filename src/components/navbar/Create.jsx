@@ -3,11 +3,11 @@ import { CreateStyleWrapper } from "./Styles/CreateStyleWrapper";
 import { withMovies, ACTIONS } from "../../contexts/MovieContext";
 
 const Create = (props) => {
-  const title = props.values.title;
-  const director = props.values.director;
-  const overview = props.values.overview;
-  const rating = props.values.rating;
-  const img = props.values.img;
+  const title = props.values.movie.title;
+  const director = props.values.movie.director;
+  const overview = props.values.movie.overview;
+  const rating = props.values.movie.rating;
+  const img = props.values.movie.img;
   const navigate = useNavigate();
   const dispatch = props.values.dispatch;
 

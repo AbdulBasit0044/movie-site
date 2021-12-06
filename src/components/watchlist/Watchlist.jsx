@@ -1,10 +1,9 @@
 import * as React from "react";
-import { useReducer, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import {
   GetMoviesBasedOnId,
   GetWatchlist,
-  AddToWatchlist,
 } from "../../API/movies";
 import {
   Typography,
@@ -15,33 +14,23 @@ import {
   ListItemAvatar,
   Avatar
 } from "@mui/material";
+import { withMovies, ACTIONS } from "../../contexts/MovieContext";
 
-const ACTIONS = {
-  SET_WATCHLIST: "set-watchlist",
-  ADD_TO_WATCHLIST: "add_to_watchlist"
-};
-
-function reducer(state, action) {
-  switch (action.type) {
-    case ACTIONS.ADD_TO_WATCHLIST:
-      return state = [...state, action.payload.value];
-    case ACTIONS.SET_WATCHLIST:
-      return (state = action.payload.value);
-    default:
-      return;
-  }
-}
-
-const Watchlist = () => {
+const Watchlist = (props) => {
   const { id } = useParams();
-  const [watchlist, setWatchlist] = useReducer(reducer, null);
+  const navigate = useNavigate();
+  const watchlist = props.values.watchlist;
+  const dispatch = props.values.dispatch; 
 
   useEffect(() => {
     async function FetchData() {
       const watchlist = await GetWatchlist().then((resp) => {
         return resp;
       });
-      setWatchlist({type: ACTIONS.SET_WATCHLIST, payload:{ value: watchlist}});
+      dispatch({
+        type: ACTIONS.SET_WATCHLIST,
+        payload: { value: watchlist },
+      });
     }
     FetchData();
   }, []);
@@ -51,8 +40,11 @@ const Watchlist = () => {
       const movie = await GetMoviesBasedOnId(id).then((resp) => {
         return resp;
       });
-      AddToWatchlist(movie);
-      setWatchlist({type: ACTIONS.ADD_TO_WATCHLIST, payload:{ value: movie}});
+      dispatch({
+        type: ACTIONS.ADD_TO_WATCHLIST,
+        payload: { value: movie },
+      });
+    navigate(`/watchlist`);
     }
     if (id) FetchData();
   }, []);
@@ -103,4 +95,4 @@ const Watchlist = () => {
   );
 };
 
-export default Watchlist;
+export default withMovies(Watchlist);

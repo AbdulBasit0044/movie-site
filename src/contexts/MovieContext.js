@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useReducer } from "react";
-import { CreateMovie, GetMovies, UpdateMovie, DeleteMovie } from "../API/movies";
+import { CreateMovie, GetMovies, UpdateMovie, DeleteMovie, AddToWatchlist } from "../API/movies";
 
 const MovieContext = React.createContext()
 
@@ -7,13 +7,14 @@ export const useMovies = () => useContext(MovieContext)
 
 const initialState = {
     movies: null,
-    selectedMovie: null,
-    movie: null,
-    title: "",
-    director: "",
-    overview: "",
-    rating: "",
-    img: "https://img.yts.mx/assets/images/movies/1917_2019/medium-cover.jpg",
+    movie: {
+        title: "",
+        director: "",
+        overview: "",
+        rating: null,
+        img: "https://img.yts.mx/assets/images/movies/1917_2019/medium-cover.jpg",
+    },
+    watchlist: null
 }
 
 export const ACTIONS = {
@@ -27,6 +28,8 @@ export const ACTIONS = {
     SET_IMG: "set-img",
     SET_CREATE_MOVIE: "create-movie",
     SUBMIT_EDIT_MOVIE: "submit-edit-movie",
+    SET_WATCHLIST: "set-watchlist",
+    ADD_TO_WATCHLIST: "add_to_watchlist"
 };
 
 const handleDeleteMovie = async (id) => {
@@ -42,7 +45,12 @@ const handleCreateMovie = async (movie) => {
 
 const handleEditMovie = async (movie) => {
     return await UpdateMovie(movie).then((resp) => {
-      });
+    });
+}
+
+const handleAddToWatchlist = async (movie) => {
+    return await AddToWatchlist(movie).then((resp) => {
+    });
 }
 function reducer(state, action) {
     switch (action.type) {
@@ -50,25 +58,31 @@ function reducer(state, action) {
             return { ...state, movies: action.payload.value };
         case ACTIONS.SET_MOVIE_FIRST_TIME:
             return { ...state, movie: action.payload.movie };
+        case ACTIONS.SET_TITLE:
+            return { ...state, movie: { ...state.movie, title: action.payload.value } };
+        case ACTIONS.SET_DIRECTOR:
+            return { ...state, movie: { ...state.movie, director: action.payload.value } };
+        case ACTIONS.SET_OVERVIEW:
+            return { ...state, movie: { ...state.movie, overview: action.payload.value } };
+        case ACTIONS.SET_RATING:
+            return { ...state, movie: { ...state.movie, rating: action.payload.value } };
+        case ACTIONS.SET_IMG:
+            return { ...state, movie: { ...state.movie, img: action.payload.value } };
         case ACTIONS.DELETE_MOVIE:
             handleDeleteMovie(action.payload.id)
             return state;
-        case ACTIONS.SET_TITLE:
-            return { ...state, title: action.payload.value };
-        case ACTIONS.SET_DIRECTOR:
-            return { ...state, director: action.payload.value };
-        case ACTIONS.SET_OVERVIEW:
-            return { ...state, overview: action.payload.value };
-        case ACTIONS.SET_RATING:
-            return { ...state, rating: action.payload.value };
-        case ACTIONS.SET_IMG:
-            return { ...state, img: action.payload.value };
         case ACTIONS.SET_CREATE_MOVIE:
             handleCreateMovie(action.payload.movie)
             return state;
         case ACTIONS.SUBMIT_EDIT_MOVIE:
             handleEditMovie(action.payload.movie)
             return state;
+        case ACTIONS.ADD_TO_WATCHLIST:
+            handleAddToWatchlist(action.payload.value)
+            state.watchlist.push(action.payload.value)
+            return { ...state };
+        case ACTIONS.SET_WATCHLIST:
+            return { ...state, watchlist: action.payload.value };
         default:
             return;
     }

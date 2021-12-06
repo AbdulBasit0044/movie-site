@@ -8,13 +8,12 @@ const Edit = (props) => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const title = props.values.title;
-  const director = props.values.director;
-  const overview = props.values.overview;
-  const rating = props.values.rating;
-  const img = props.values.img;
+  const title = props.values.movie.title;
+  const director = props.values.movie.director;
+  const overview = props.values.movie.overview;
+  const rating = props.values.movie.rating;
+  const img = props.values.movie.img;
   const dispatch = props.values.dispatch;
-  const movie = props.values.movie;
 
   useEffect(() => {
     async function FetchData() {
@@ -22,22 +21,6 @@ const Edit = (props) => {
         return resp;
       });
       dispatch({ type: ACTIONS.SET_MOVIE_FIRST_TIME, payload: { movie: movie } });
-      if (movie != null) {
-        dispatch({ type: ACTIONS.SET_TITLE, payload: { value: movie.title } });
-        dispatch({
-          type: ACTIONS.SET_DIRECTOR,
-          payload: { value: movie.director },
-        });
-        dispatch({
-          type: ACTIONS.SET_OVERVIEW,
-          payload: { value: movie.overview },
-        });
-        dispatch({
-          type: ACTIONS.SET_RATING,
-          payload: { value: movie.rating },
-        });
-        dispatch({ type: ACTIONS.SET_IMG, payload: { value: movie.img } });
-      }
     }
     FetchData();
   }, []);
